@@ -21,3 +21,13 @@ module "vpc" {
   ingress_cidr_block = var.ingress_cidr_block
   egress_cidr_block  = var.egress_cidr_block
 }
+
+
+module "acm" {
+  source             = "./modules/acm"
+  domain_name        = var.domain_name
+  validation_method  = var.validation_method
+  route53_zone_id    = var.route53_zone_id
+  dns_ttl            = var.dns_ttl
+}
+
