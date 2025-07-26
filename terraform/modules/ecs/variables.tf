@@ -2,7 +2,6 @@ variable "cluster_name" {}
 variable "task_family" {}
 variable "container_name" {}
 variable "container_image" {}
-variable "container_port" {}
 variable "cpu" {}
 variable "memory" {}
 variable "aws_region" {}
@@ -13,3 +12,7 @@ variable "subnet_ids" {
 }
 variable "security_group_id" {}
 variable "target_group_arn" {}
+variable "container_port" {
+  type    = number
+  default = 3000
+}

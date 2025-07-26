@@ -37,3 +37,34 @@ variable "dns_ttl" {
   type        = number
   default     = 60
 }
+
+variable "vpc_id" {}
+variable "subnet_ids" {
+  type = list(string)
+}
+variable "lb_security_group_id" {}
+
+variable "listener_port" {
+  type    = number
+  default = 80
+}
+
+variable "listener_protocol" {
+  type    = string
+  default = "HTTP"
+}
+
+variable "target_group_port" {
+  type    = number
+  default = 80
+}
+
+variable "target_group_protocol" {
+  type    = string
+  default = "HTTP"
+}
+
+variable "health_check_path" {
+  type    = string
+  default = "/"
+}

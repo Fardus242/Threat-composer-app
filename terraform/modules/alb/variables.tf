@@ -22,7 +22,7 @@ variable "listener_protocol" {
 
 variable "target_group_port" {
   type    = number
-  default = 80
+  default = 3000
 }
 
 variable "target_group_protocol" {
@@ -59,3 +59,4 @@ variable "health_check_unhealthy_threshold" {
   type    = number
   default = 2
 }
+
