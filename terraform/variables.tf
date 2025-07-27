@@ -68,3 +68,14 @@ variable "health_check_path" {
   type    = string
   default = "/"
 }
+
+variable "host_port" {
+  type    = number
+  default = 3000
+}
+
+
+variable "container_port" {
+  type    = number
+  default = 3000
+}

@@ -10,9 +10,10 @@ variable "desired_count" {}
 variable "subnet_ids" {
   type = list(string)
 }
+variable "host_port" {}
 variable "security_group_id" {}
 variable "target_group_arn" {}
 variable "container_port" {
-  type    = number
-  default = 3000
+  type = number
 }
+
