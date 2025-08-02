@@ -79,3 +79,61 @@ variable "container_port" {
   type    = number
   default = 3000
 }
+
+#ecs
+
+variable "cluster_name" {
+  type        = string
+  description = "Name of the ECS cluster"
+}
+
+variable "task_family" {
+  type        = string
+  description = "ECS Task family name"
+}
+
+variable "container_name" {
+  type        = string
+  description = "Container name"
+}
+
+variable "container_image" {
+  type        = string
+  description = "Docker image for the container"
+}
+
+variable "cpu" {
+  type        = string
+  description = "CPU units for the ECS task"
+}
+
+variable "memory" {
+  type        = string
+  description = "Memory (in MiB) for the ECS task"
+}
+
+variable "aws_region" {
+  type        = string
+  description = "AWS region"
+}
+
+variable "service_name" {
+  type        = string
+  description = "Name of the ECS service"
+}
+
+variable "desired_count" {
+  type        = number
+  description = "Number of ECS tasks to run"
+}
+
+
+variable "security_group_id" {
+  type        = string
+  description = "Security group ID for the ECS service"
+}
+
+variable "target_group_arn" {
+  type        = string
+  description = "ARN of the ALB Target Group"
+}

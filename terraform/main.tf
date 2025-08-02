@@ -45,37 +45,32 @@ module "alb" {
   health_check_path     = var.health_check_path
 
 
-  providers = {
-    aws = aws.eunorth
-  }
+
 }
 
 #ecs
 module "ecs" {
-  source  = "./modules/ecs"
+  source = "./modules/ecs" 
+ 
 
-  providers = {
-    aws = aws.eunorth
-  }
-
-  cluster_name       = "app-cluster"
-  task_family        = "app-task"
-  container_name     = "app-container"
-  container_image    = "388212729357.dkr.ecr.eu-north-1.amazonaws.com/threat-composer:latest"
-  container_port     = var.container_port
-  cpu                = "256"
-  memory             = "512"
-  aws_region         = "eu-north-1"
-  service_name       = "app-service"
-  desired_count      = 1
+  cluster_name       = var.cluster_name
+  task_family        = var.task_family
+  container_name     = var.container_name
+  container_image    = var.container_image
+  cpu                = var.cpu
+  memory             = var.memory
+  aws_region         = var.aws_region
+  service_name       = var.service_name
+  desired_count      = var.desired_count
   subnet_ids         = var.subnet_ids
-  security_group_id  = var.lb_security_group_id
-  target_group_arn   = module.alb.target_group_arn
   host_port          = var.host_port
+  container_port     = var.container_port
+  security_group_id  = var.security_group_id
+  target_group_arn   = var.target_group_arn
 }
 
 #route53
-module "dns" {
+module "route53" {
   source = "./modules/route53"
 
   zone_id        = var.route53_zone_id
