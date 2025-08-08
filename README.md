@@ -1,24 +1,16 @@
-<div align="center">
-    <img src="./images/coderco.jpg" alt="CoderCo" width="300"/>
-</div>
+# AWS Threat Modelling App Deployed to AWS ECS with Terraform and Github Actions
 
-# CoderCo Assignment 1 - Open Source App Hosted on ECS with Terraform 🚀
+This project builds upon Amazon's open-source Threat Composer Tool, extending it into a production-ready deployment on AWS. It showcases a containerised Node.js application hosted on ECS Fargate, with infrastructure as code managed via Terraform and automated CI/CD pipelines using GitHub Actions.
 
-This project is based on Amazon's Threat Composer Tool, an open source tool designed to facilitate threat modeling and improve security assessments. You can explore the tool's dashboard here: [Threat Composer Tool](https://awslabs.github.io/threat-composer/workspaces/default/dashboard)
+## Overview
+- Automated infrastructure provisioning
+- CI/CD pipeline for seamless deployments
+- Dockerised application running on AWS ECS
+- HTTPS access enabled through an Application Load Balancer and ACM
+- DNS management via Route 53
 
-## Task/Assignment 📝
+## Architecture Diagram:
 
-- Create your own repository and complete the task there. You may create a `app` in your repo and copy all the files in this directory into it. Or alternatively, you can use this directory as is. Your choice.
-
-- Your task will be to create a container image for the app, push it to ECR (recommended) or DockerHub. Ideally, you should use a CI/CD pipeline to build, test, and push the container image.
-
-- Deploy the app on ECS using Terraform. All the resources should be provisioned using Terraform. Use TF modules.
-
-- Make sure the app is live on `https://tm.<your-domain>` or `https://tm.labs.<your-domain>`
-
-- App must use HTTPS. Hosted on ECS. Figure out the rest. Once app is live, add screenshots to the README.md file.
-
-- Add architecture diagram of how the infrastructure is setup. (Use Lucidchart or draw.io or mermaid) You are free to use any diagramming tool.
 
 ## Local app setup 💻
 
@@ -28,22 +20,41 @@ yarn build
 yarn global add serve
 serve -s build
 
-#yarn start
+#Then visit:
 http://localhost:3000/workspaces/default/dashboard
 
-## or
+## Or use:
 yarn global add serve
 serve -s build
 ```
 
-## Useful links 🔗
+## Key Components
+* ### Docker
 
-- [Terraform AWS Registry](https://registry.terraform.io/providers/hashicorp/aws/latest/docs)
-- [Terraform AWS ECS](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecs_cluster)
-- [Terraform Docs](https://www.terraform.io/docs/index.html)
-- [ECS Docs](https://docs.aws.amazon.com/ecs/latest/userguide/what-is-ecs.html)
+* Dockerfile defines how the Node.js app is containerized.
 
-## Advice & Tips �
+Terraform (Infrastructure as Code)
 
-- This is just a simple app, you may use another app if you'd like. 
-- Use best practices for your Terraform code. Use best practices for your container image. Use best practices for your CI/CD pipeline.
+ECS Fargate to host the containerized app.
+
+Application Load Balancer for HTTPS traffic routing.
+
+Route 53 for DNS/domain management.
+
+ACM (AWS Certificate Manager) for SSL/TLS certificates.
+
+Security groups to manage network access.
+
+VPC setup with public subnets, internet gateway, and NAT gateway.
+
+S3 Bucket for remote Terraform state with state locking.
+
+CI/CD (GitHub Actions)
+
+Build and scan Docker images.
+
+Push images to Amazon ECR.
+
+Run Terraform plan and apply for infrastructure changes.
+
+Optionally destroy infrastructure if needed.
