@@ -7,12 +7,35 @@ terraform {
   }
 }
 
+# resource "aws_security_group" "alb_sg" {
+#   name        = var.alb_sg_name
+#   description = var.alb_sg_description
+#   vpc_id      = var.vpc_id
+
+#   ingress {
+#     from_port   = 80
+#     to_port     = 80
+#     protocol    = "tcp"
+#     cidr_blocks = ["0.0.0.0/0"]
+#   }
+
+#   egress {
+#     from_port   = 0
+#     to_port     = 0
+#     protocol    = "-1"
+#     cidr_blocks = ["0.0.0.0/0"]
+#   }
+
+#   tags = {
+#     Name = var.alb_sg_name
+#   }
+# }
 
 resource "aws_lb" "this" {
   name               = "app-lb"
   internal           = false
   load_balancer_type = "application"
-  security_groups    = [var.lb_security_group_id]
+  security_groups    = [var.security_group_id]
   subnets            = var.subnet_ids
 
   enable_deletion_protection = false
@@ -26,9 +49,8 @@ resource "aws_lb_target_group" "this" {
   name        = "app-tg"
   port        = var.target_group_port
   protocol    = var.target_group_protocol
-  target_type = "ip" 
-
-  vpc_id = var.vpc_id
+  target_type = "ip"
+  vpc_id      = var.vpc_id
 
   health_check {
     path                = var.health_check_path

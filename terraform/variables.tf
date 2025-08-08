@@ -137,3 +137,34 @@ variable "target_group_arn" {
   type        = string
   description = "ARN of the ALB Target Group"
 }
+
+
+#ecs
+variable "ecs_security_group_name" {
+  type        = string
+  description = "Name of ECS security group"
+}
+
+variable "ecs_security_group_description" {
+  type        = string
+  description = "Description for ECS security group"
+}
+
+# variable "ecs_ingress_port" {
+#   type        = number
+#   description = "Ingress port for ECS service"
+# }
+variable "ecs_ingress_cidr_block" {
+  type        = string
+  description = "CIDR block for ECS ingress"
+}
+
+variable "app_from_port" {
+  type        = number
+  description = "Port from which the application will be accessible"
+}
+
+variable "app_to_port" {
+  type        = number
+  description = "Port to which the application will be accessible"
+}

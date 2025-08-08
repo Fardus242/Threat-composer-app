@@ -1,7 +1,14 @@
-variable "zone_id" {}
-variable "record_name" {}
-variable "record_type" {
-  default = "A"
+variable "domain_name" {
+  description = "Root domain name (e.g., tm-fardus.com)"
+  type        = string
 }
-variable "alias_name" {}
-variable "alias_zone_id" {}
+
+variable "alb_dns_name" {
+  description = "DNS name of the ALB"
+  type        = string
+}
+
+variable "alb_zone_id" {
+  description = "Zone ID of the ALB"
+  type        = string
+}

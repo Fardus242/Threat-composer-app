@@ -6,7 +6,7 @@ WORKDIR /app
 # Copy dependency files
 COPY package.json yarn.lock ./
 
-# Install projen globally (needed for build scripts)
+# Install projen globally 
 RUN npm install -g projen
 
 # Install all dependencies
@@ -15,7 +15,7 @@ RUN yarn install --frozen-lockfile
 # Copy the rest of the source files
 COPY . .
 
-# Run the build (uses npx projen build internally)
+# Run the build 
 RUN yarn build
 
 # Stage 2: Serve the app

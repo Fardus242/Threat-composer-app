@@ -60,10 +60,15 @@ variable "container_port" {
 
 variable "security_group_id" {
   type        = string
-  description = "Security group ID for the ECS service"
+  description = "Security group ID for the ECS"
 }
 
 variable "target_group_arn" {
   type        = string
   description = "ARN of the ALB Target Group"
+}
+
+variable "security_groups" {
+  type        = string
+  description = "security group names"
 }

@@ -74,6 +74,7 @@ resource "aws_ecs_service" "this" {
   launch_type     = "FARGATE"
   desired_count   = var.desired_count
 
+
   network_configuration {
     subnets         = var.subnet_ids
     security_groups = [var.security_group_id]
@@ -86,5 +87,8 @@ resource "aws_ecs_service" "this" {
     container_port   = var.container_port
   }
 
-  depends_on = [aws_iam_role_policy_attachment.exec_policy]
+  depends_on = [
+    aws_iam_role_policy_attachment.exec_policy,
+    #module.alb.aws_lb_listener.this
+    ]
 }

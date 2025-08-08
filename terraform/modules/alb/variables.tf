@@ -6,10 +6,22 @@ variable "subnet_ids" {
   type = list(string)
 }
 
-variable "lb_security_group_id" {
+# variable "alb_sg_name" {
+#   type        = string
+#   description = "Name of the ALB security group"
+#   default     = "alb-sg"
+# }
+
+# variable "alb_sg_description" {
+#   type        = string
+#   description = "Description for the ALB security group"
+#   default     = "Security group for Application Load Balancer"
+# }
+
+
+variable "security_group_id" {
   type = string
 }
-
 variable "listener_port" {
   type    = number
   default = 80
@@ -59,4 +71,3 @@ variable "health_check_unhealthy_threshold" {
   type    = number
   default = 2
 }
-

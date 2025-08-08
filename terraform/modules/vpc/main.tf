@@ -37,16 +37,44 @@ resource "aws_route_table" "rt" {
   }
 }
 
-resource "aws_security_group" "main" {
-  name        = var.security_group_name
-  description = var.security_group_description
+ resource "aws_security_group" "alb_sg" {
+  name        = "alb-sg"
+  description = "Security group for Application Load Balancer"
   vpc_id      = aws_vpc.this.id
 
   ingress {
+    description = "Allow HTTP from anywhere"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    description = "Allow all outbound traffic"
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
-    cidr_blocks = [var.ingress_cidr_block]
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "alb-sg"
+  }
+}
+
+
+#ecs security group
+resource "aws_security_group" "ecs" {
+  name        = var.ecs_security_group_name
+  description = var.ecs_security_group_description
+  vpc_id      = aws_vpc.this.id
+
+  ingress {
+    from_port   = var.app_from_port
+    to_port     = var.app_to_port
+    protocol    = "tcp"
+    cidr_blocks = [var.ecs_ingress_cidr_block]
   }
 
   egress {
@@ -57,6 +85,6 @@ resource "aws_security_group" "main" {
   }
 
   tags = {
-    Name = var.security_group_name
+    Name = var.ecs_security_group_name
   }
 }
