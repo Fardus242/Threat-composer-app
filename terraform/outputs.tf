@@ -1,3 +1,4 @@
 output "app_url" {
-  value = "http://${module.alb.dns_name}"
+  description = "Public URL of the app"
+  value       = "https://tm.${var.domain_name}"
 }

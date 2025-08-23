@@ -58,17 +58,49 @@ variable "container_port" {
   description = "Container port to expose"
 }
 
-variable "security_group_id" {
-  type        = string
-  description = "Security group ID for the ECS"
-}
+
 
 variable "target_group_arn" {
   type        = string
   description = "ARN of the ALB Target Group"
 }
 
-variable "security_groups" {
+# variable "security_groups" {
+#   type        = string
+#   description = "security group names"
+# }
+
+variable "vpc_id" {
+  description = "VPC ID for ECS security group"
   type        = string
-  description = "security group names"
+}
+
+variable "ecs_security_group_name" {
+  description = "Name of the ECS security group"
+  type        = string
+}
+
+variable "ecs_security_group_description" {
+  description = "Description for the ECS security group"
+  type        = string
+}
+
+variable "ecs_ingress_cidr_block" {
+  description = "CIDR block for ECS SG ingress"
+  type        = string
+}
+
+variable "app_from_port" {
+  description = "Starting port for app traffic"
+  type        = number
+}
+
+variable "app_to_port" {
+  description = "Ending port for app traffic"
+  type        = number
+}
+
+variable "ecs_security_group_id" {
+ type = string
+ 
 }

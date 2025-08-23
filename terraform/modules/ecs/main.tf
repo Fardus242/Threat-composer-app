@@ -77,7 +77,7 @@ resource "aws_ecs_service" "this" {
 
   network_configuration {
     subnets         = var.subnet_ids
-    security_groups = [var.security_group_id]
+    security_groups = [var.ecs_security_group_id]
     assign_public_ip = true
   }
 
@@ -92,3 +92,28 @@ resource "aws_ecs_service" "this" {
     #module.alb.aws_lb_listener.this
     ]
 }
+
+
+# resource "aws_security_group" "ecs_sg" {
+#   name        = var.ecs_security_group_name
+#   description = var.ecs_security_group_description
+#   vpc_id      = var.vpc_id
+
+#   ingress {
+#     from_port   = var.app_from_port
+#     to_port     = var.app_to_port
+#     protocol    = "tcp"
+#     cidr_blocks = [var.ecs_ingress_cidr_block]
+#   }
+
+#   egress {
+#     from_port   = 0
+#     to_port     = 0
+#     protocol    = "-1"
+#     cidr_blocks = ["0.0.0.0/0"]
+#   }
+
+#   tags = {
+#     Name = var.ecs_security_group_name
+#   }
+# }

@@ -6,17 +6,16 @@ variable "subnet_ids" {
   type = list(string)
 }
 
-# variable "alb_sg_name" {
-#   type        = string
-#   description = "Name of the ALB security group"
-#   default     = "alb-sg"
-# }
+variable "alb_sg_id" {
+  
+}
 
-# variable "alb_sg_description" {
-#   type        = string
-#   description = "Description for the ALB security group"
-#   default     = "Security group for Application Load Balancer"
-# }
+
+variable "alb_sg_description" {
+  type        = string
+  description = "Description for the ALB security group"
+  default     = "Security group for Application Load Balancer"
+}
 
 
 variable "security_group_id" {
@@ -41,6 +40,7 @@ variable "target_group_protocol" {
   type    = string
   default = "HTTP"
 }
+
 
 variable "health_check_path" {
   type    = string
@@ -70,4 +70,9 @@ variable "health_check_healthy_threshold" {
 variable "health_check_unhealthy_threshold" {
   type    = number
   default = 2
+}
+
+variable "certificate_arn" {
+  type        = string
+  description = "ACM certificate ARN for HTTPS listener"
 }

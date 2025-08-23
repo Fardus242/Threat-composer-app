@@ -1,15 +1,16 @@
 variable "domain_name" {
-  description = "Domain name to request ACM certificate for"
+  description = "Domain name for ACM certificate"
   type        = string
 }
 
 variable "route53_zone_id" {
-  description = "ID of the Route53 hosted zone for DNS validation"
+  description = "Route53 hosted zone ID"
   type        = string
+  default     = ""
 }
 
 variable "validation_method" {
-  description = "Validation method for ACM certificate )"
+  description = "Validation method for ACM certificate"
   type        = string
   default     = "DNS"
 }

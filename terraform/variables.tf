@@ -5,7 +5,23 @@ variable "subnet_1_name" {}
 variable "subnet_1_cidr" {}
 variable "subnet_1_az" {}
 
-variable "route_table_name" {}
+variable "subnet_2_name" {
+  type = string
+}
+
+variable "subnet_2_cidr" {
+  type = string
+}
+
+variable "subnet_2_az" {
+  type = string
+}
+
+
+
+variable "route_table_name" {
+  type = string
+}
 variable "routetable_cidrs" {}
 
 variable "internet_gateway_name" {}
@@ -38,11 +54,11 @@ variable "dns_ttl" {
   default     = 60
 }
 
-variable "vpc_id" {}
-variable "subnet_ids" {
-  type = list(string)
-}
-variable "lb_security_group_id" {}
+# variable "vpc_id" {}
+# variable "subnet_ids" {
+#   type = list(string)
+# } 
+
 
 variable "listener_port" {
   type    = number
@@ -128,15 +144,15 @@ variable "desired_count" {
 }
 
 
-variable "security_group_id" {
-  type        = string
-  description = "Security group ID for the ECS service"
-}
+# variable "security_group_id" {
+#   type        = string
+#   description = "Security group ID for the ECS service"
+# }
 
-variable "target_group_arn" {
-  type        = string
-  description = "ARN of the ALB Target Group"
-}
+# variable "target_group_arn" {
+#   type        = string
+#   description = "ARN of the ALB Target Group"
+# }
 
 
 #ecs

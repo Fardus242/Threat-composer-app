@@ -23,6 +23,22 @@ variable "subnet_1_az" {
   type        = string
 }
 
+variable "subnet_2_cidr" {
+  description = "CIDR block for the second subnet"
+  type        = string
+}
+
+variable "subnet_2_az" {
+  description = "Availability zone for the second subnet"
+  type        = string
+}
+
+variable "subnet_2_name" {
+  description = "Name tag for subnet 2"
+  type        = string
+}
+
+
 variable "route_table_name" {
   description = "Name of the route table"
   type        = string
@@ -87,4 +103,41 @@ variable "app_from_port" {
 variable "app_to_port" {
   type = number
   description = "The ending port in the allowed port range."
+}
+
+
+
+
+variable "private_subnet_1_cidr" {}
+variable "private_subnet_1_az" {}
+variable "private_subnet_1_name" {}
+
+variable "private_subnet_2_cidr" {}
+variable "private_subnet_2_az" {}
+variable "private_subnet_2_name" {}
+
+
+
+variable "private_nacl_config" {
+  description = "Network ACL rules for private subnets with NAT and ECS access"
+  type = list(object({
+    rule_number : number
+    egress      : bool
+    protocol    : string
+    rule_action : string
+    cidr_block  : string
+    from_port   : number
+    to_port     : number
+  }))
+  default = [
+    # Allow all outbound traffic to internet (via NAT)
+    { rule_number=100, egress=true,  protocol="-1", rule_action="allow", cidr_block="0.0.0.0/0", from_port=0, to_port=0 },
+
+    # Allow inbound traffic (replies from NAT)
+    { rule_number=100, egress=false, protocol="-1", rule_action="allow", cidr_block="0.0.0.0/0", from_port=0, to_port=0 },
+
+    # Optional: block all else for security
+    { rule_number=200, egress=true,  protocol="-1", rule_action="deny",  cidr_block="0.0.0.0/0", from_port=0, to_port=0 },
+    { rule_number=200, egress=false, protocol="-1", rule_action="deny",  cidr_block="0.0.0.0/0", from_port=0, to_port=0 }
+  ]
 }

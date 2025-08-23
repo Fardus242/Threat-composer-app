@@ -2,8 +2,16 @@ output "vpc_id" {
   value = aws_vpc.this.id
 }
 
-output "subnet_id" {
-  value = aws_subnet.subnet1.id
+# output "subnet_id" {
+#   value = aws_subnet.subnet1.id
+# }
+
+output "subnet_ids" {
+  description = "List of subnet IDs"
+  value       = [
+    aws_subnet.subnet1.id,
+    aws_subnet.subnet2.id
+  ]
 }
 
 output "internet_gateway_id" {
@@ -24,3 +32,10 @@ output "ecs_security_group_id" {
   value = aws_security_group.ecs.id
 }
 
+output "private_subnet_ids" {
+  value = [aws_subnet.private1.id, aws_subnet.private2.id]
+}
+
+output "nat_gateway_id" {
+  value = aws_nat_gateway.this.id
+}
