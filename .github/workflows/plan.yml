@@ -1,0 +1,56 @@
+name: Terraform Plan
+
+on:
+  workflow_dispatch:  
+  workflow_run:       
+    workflows: ["Docker Build & Push"]
+    types:
+      - completed
+
+env:
+  AWS_REGION: eu-north-1   
+
+jobs:
+  terraform:
+    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch' }}
+    runs-on: ubuntu-latest
+
+    steps:
+   
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+     
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+    
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+
+      - name: Terraform Format Check
+        run: find . -name '*.tf' -exec terraform fmt -check -diff {} +
+        working-directory: terraform
+
+  
+      - name: Install and Run TFLint
+        run: |
+          curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
+          tflint --version
+          tflint --init --chdir=terraform
+          tflint --chdir=terraform
+
+   
+      - name: Terraform Init
+        run: terraform init
+        working-directory: terraform
+
+  
+      - name: Terraform Plan
+        run: terraform plan -var-file=terraform.tfvars
+        working-directory: terraform
