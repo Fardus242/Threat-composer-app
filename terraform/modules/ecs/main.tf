@@ -47,8 +47,8 @@ resource "aws_ecs_task_definition" "this" {
 
   container_definitions = jsonencode([
     {
-      name                  = var.container_name
-      image                 = var.container_image
+      name  = var.container_name
+      image = var.container_image
       portMappings = [
         {
           containerPort = var.container_port
@@ -76,8 +76,8 @@ resource "aws_ecs_service" "this" {
 
 
   network_configuration {
-    subnets         = var.subnet_ids
-    security_groups = [var.ecs_security_group_id]
+    subnets          = var.subnet_ids
+    security_groups  = [var.ecs_security_group_id]
     assign_public_ip = true
   }
 
@@ -90,7 +90,7 @@ resource "aws_ecs_service" "this" {
   depends_on = [
     aws_iam_role_policy_attachment.exec_policy,
     #module.alb.aws_lb_listener.this
-    ]
+  ]
 }
 
 

@@ -17,9 +17,9 @@ resource "aws_subnet" "subnet1" {
 }
 
 resource "aws_subnet" "subnet2" {
-  vpc_id                  = aws_vpc.this.id
-  cidr_block              = var.subnet_2_cidr
-  availability_zone       = var.subnet_2_az
+  vpc_id            = aws_vpc.this.id
+  cidr_block        = var.subnet_2_cidr
+  availability_zone = var.subnet_2_az
 
   tags = {
     Name = var.subnet_2_name
@@ -36,7 +36,7 @@ resource "aws_internet_gateway" "gw" {
   }
 }
 
-resource "aws_route_table" "rt" { 
+resource "aws_route_table" "rt" {
   vpc_id = aws_vpc.this.id
 
   route {
@@ -49,13 +49,13 @@ resource "aws_route_table" "rt" {
   }
 }
 resource "aws_route_table_association" "public" {
-subnet_id      = aws_subnet.subnet1.id
+  subnet_id      = aws_subnet.subnet1.id
   route_table_id = aws_route_table.rt.id
 }
 
 
 
- resource "aws_security_group" "alb_sg" {
+resource "aws_security_group" "alb_sg" {
   name        = "alb-sg"
   description = "Security group for Application Load Balancer"
   vpc_id      = aws_vpc.this.id
@@ -77,12 +77,12 @@ subnet_id      = aws_subnet.subnet1.id
   }
 
   ingress {
-  description = "Allow HTTPS from anywhere"
-  from_port   = 443
-  to_port     = 443
-  protocol    = "tcp"
-  cidr_blocks = ["0.0.0.0/0"]
-}
+    description = "Allow HTTPS from anywhere"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 
 
   tags = {
@@ -141,14 +141,14 @@ resource "aws_subnet" "private1" {
   vpc_id            = aws_vpc.this.id
   cidr_block        = var.private_subnet_1_cidr
   availability_zone = data.aws_availability_zones.available.names[0]
-  tags = { Name = var.private_subnet_1_name }
+  tags              = { Name = var.private_subnet_1_name }
 }
 
 resource "aws_subnet" "private2" {
   vpc_id            = aws_vpc.this.id
   cidr_block        = var.private_subnet_2_cidr
   availability_zone = data.aws_availability_zones.available.names[1]
-  tags = { Name = var.private_subnet_2_name }
+  tags              = { Name = var.private_subnet_2_name }
 }
 
 
@@ -161,7 +161,7 @@ resource "aws_eip" "nat" {
 # NAT Gateway in one of the public subnets
 resource "aws_nat_gateway" "this" {
   allocation_id = aws_eip.nat.id
-  subnet_id     = aws_subnet.subnet1.id  # pick one public subnet
+  subnet_id     = aws_subnet.subnet1.id # pick one public subnet
   tags          = { Name = "${var.vpc_name}-nat" }
   depends_on    = [aws_internet_gateway.gw]
 }

@@ -20,11 +20,11 @@ data "aws_route53_zone" "selected" {
 
 resource "aws_route53_record" "subdomain" {
   zone_id = data.aws_route53_zone.selected.id
-  name    = "tm.${var.domain_name}"  
+  name    = "tm.${var.domain_name}"
   type    = "A"
 
   alias {
-    name                   = var.alb_dns_name   
+    name                   = var.alb_dns_name
     zone_id                = var.alb_zone_id
     evaluate_target_health = true
   }

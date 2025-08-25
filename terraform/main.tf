@@ -3,43 +3,43 @@
 module "vpc" {
   source = "./modules/vpc"
 
-  vpc_name                = var.vpc_name
-  vpc_cidr                = var.vpc_cidr
-  subnet_1_name           = var.subnet_1_name
-  subnet_1_cidr           = var.subnet_1_cidr
-  subnet_1_az             = var.subnet_1_az
-  subnet_2_name           = var.subnet_2_name
-  subnet_2_cidr           = var.subnet_2_cidr
-  subnet_2_az             = var.subnet_2_az
-  route_table_name        = var.route_table_name
-  routetable_cidrs        = var.routetable_cidrs
-  internet_gateway_name   = var.internet_gateway_name
-  security_group_name     = var.security_group_name
-  security_group_description = var.security_group_description
-  ingress_cidr_block      = var.ingress_cidr_block
-  egress_cidr_block       = var.egress_cidr_block
-  ecs_security_group_name = var.ecs_security_group_name
+  vpc_name                       = var.vpc_name
+  vpc_cidr                       = var.vpc_cidr
+  subnet_1_name                  = var.subnet_1_name
+  subnet_1_cidr                  = var.subnet_1_cidr
+  subnet_1_az                    = var.subnet_1_az
+  subnet_2_name                  = var.subnet_2_name
+  subnet_2_cidr                  = var.subnet_2_cidr
+  subnet_2_az                    = var.subnet_2_az
+  route_table_name               = var.route_table_name
+  routetable_cidrs               = var.routetable_cidrs
+  internet_gateway_name          = var.internet_gateway_name
+  security_group_name            = var.security_group_name
+  security_group_description     = var.security_group_description
+  ingress_cidr_block             = var.ingress_cidr_block
+  egress_cidr_block              = var.egress_cidr_block
+  ecs_security_group_name        = var.ecs_security_group_name
   ecs_security_group_description = var.ecs_security_group_description
-  ecs_ingress_cidr_block  = var.ecs_ingress_cidr_block
-  app_from_port           = var.app_from_port
-  app_to_port             = var.app_to_port
-  private_subnet_1_cidr   = "10.0.3.0/24"
-  private_subnet_1_az     = "us-east-1a"
-  private_subnet_1_name   = "private-1"
+  ecs_ingress_cidr_block         = var.ecs_ingress_cidr_block
+  app_from_port                  = var.app_from_port
+  app_to_port                    = var.app_to_port
+  private_subnet_1_cidr          = "10.0.3.0/24"
+  private_subnet_1_az            = "us-east-1a"
+  private_subnet_1_name          = "private-1"
 
-  private_subnet_2_cidr   = "10.0.4.0/24"
-  private_subnet_2_az     = "us-east-1b"
-  private_subnet_2_name   = "private-2"
+  private_subnet_2_cidr = "10.0.4.0/24"
+  private_subnet_2_az   = "us-east-1b"
+  private_subnet_2_name = "private-2"
 }
 
 
 module "alb" {
-  source             = "./modules/alb"
-  vpc_id             = module.vpc.vpc_id
-  subnet_ids         = module.vpc.subnet_ids
-  alb_sg_id          = module.vpc.alb_sg_id
-  security_group_id  = module.vpc.alb_sg_id
-  certificate_arn    = module.acm.certificate_arn
+  source            = "./modules/alb"
+  vpc_id            = module.vpc.vpc_id
+  subnet_ids        = module.vpc.subnet_ids
+  alb_sg_id         = module.vpc.alb_sg_id
+  security_group_id = module.vpc.alb_sg_id
+  certificate_arn   = module.acm.certificate_arn
 }
 
 
@@ -66,26 +66,26 @@ module "ecs" {
   app_from_port                  = var.app_from_port
   app_to_port                    = var.app_to_port
   # security_groups                = [module.vpc.ecs_security_group_id]
-  ecs_security_group_id          = module.vpc.ecs_security_group_id
+  ecs_security_group_id = module.vpc.ecs_security_group_id
 }
 
 
 
 #route53
 module "route53" {
-  source         = "./modules/route53"
-  
-  domain_name    = var.domain_name              
-  alb_dns_name   = module.alb.lb_dns_name      
-  alb_zone_id    = module.alb.lb_zone_id       
+  source = "./modules/route53"
+
+  domain_name  = var.domain_name
+  alb_dns_name = module.alb.lb_dns_name
+  alb_zone_id  = module.alb.lb_zone_id
 }
 
 
 #acm
 
 module "acm" {
-  source      = "./modules/acm"
-  domain_name = "tm-fardus.com"
-  route53_zone_id  = "Z0874723168P4BGRP5CQS" 
+  source          = "./modules/acm"
+  domain_name     = "tm-fardus.com"
+  route53_zone_id = "Z0874723168P4BGRP5CQS"
 
 }

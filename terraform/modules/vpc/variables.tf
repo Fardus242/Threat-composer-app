@@ -96,12 +96,12 @@ variable "ecs_ingress_cidr_block" {
 
 
 variable "app_from_port" {
-  type = number
+  type        = number
   description = "The starting port in the allowed port range."
 }
 
 variable "app_to_port" {
-  type = number
+  type        = number
   description = "The ending port in the allowed port range."
 }
 
@@ -122,22 +122,22 @@ variable "private_nacl_config" {
   description = "Network ACL rules for private subnets with NAT and ECS access"
   type = list(object({
     rule_number : number
-    egress      : bool
-    protocol    : string
+    egress : bool
+    protocol : string
     rule_action : string
-    cidr_block  : string
-    from_port   : number
-    to_port     : number
+    cidr_block : string
+    from_port : number
+    to_port : number
   }))
   default = [
     # Allow all outbound traffic to internet (via NAT)
-    { rule_number=100, egress=true,  protocol="-1", rule_action="allow", cidr_block="0.0.0.0/0", from_port=0, to_port=0 },
+    { rule_number = 100, egress = true, protocol = "-1", rule_action = "allow", cidr_block = "0.0.0.0/0", from_port = 0, to_port = 0 },
 
     # Allow inbound traffic (replies from NAT)
-    { rule_number=100, egress=false, protocol="-1", rule_action="allow", cidr_block="0.0.0.0/0", from_port=0, to_port=0 },
+    { rule_number = 100, egress = false, protocol = "-1", rule_action = "allow", cidr_block = "0.0.0.0/0", from_port = 0, to_port = 0 },
 
     # Optional: block all else for security
-    { rule_number=200, egress=true,  protocol="-1", rule_action="deny",  cidr_block="0.0.0.0/0", from_port=0, to_port=0 },
-    { rule_number=200, egress=false, protocol="-1", rule_action="deny",  cidr_block="0.0.0.0/0", from_port=0, to_port=0 }
+    { rule_number = 200, egress = true, protocol = "-1", rule_action = "deny", cidr_block = "0.0.0.0/0", from_port = 0, to_port = 0 },
+    { rule_number = 200, egress = false, protocol = "-1", rule_action = "deny", cidr_block = "0.0.0.0/0", from_port = 0, to_port = 0 }
   ]
 }

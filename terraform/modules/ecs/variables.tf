@@ -101,6 +101,6 @@ variable "app_to_port" {
 }
 
 variable "ecs_security_group_id" {
- type = string
- 
+  type = string
+
 }
