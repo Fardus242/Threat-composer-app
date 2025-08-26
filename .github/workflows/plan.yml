@@ -8,7 +8,7 @@ on:
       - completed
 
 env:
-  AWS_REGION: eu-north-1   
+  AWS_REGION: eu-north-1  
 
 jobs:
   terraform:
