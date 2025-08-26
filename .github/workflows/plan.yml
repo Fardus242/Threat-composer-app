@@ -1,8 +1,8 @@
 name: Terraform Plan
 
 on:
-  workflow_dispatch:
-  workflow_run:
+  workflow_dispatch:  
+  workflow_run:       
     workflows: ["Docker Build & Push"]
     types:
       - completed
@@ -29,8 +29,8 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
 
-      - name: Terraform Format (auto-fix)
-        run: terraform fmt -recursive
+      - name: Terraform Format Check
+        run: terraform fmt -check -recursive
         working-directory: terraform
 
       - name: Install and Run TFLint
@@ -38,7 +38,12 @@ jobs:
           curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
           tflint --version
           tflint --init --chdir=terraform
+          tflint --chdir=terraform
           tflint --chdir=terraform --disable-rule=terraform_typed_variables --disable-rule=terraform_unused_declarations
+
+      # 👇 NEW STEP: Recreate terraform.tfvars from GitHub secret
+      - name: Create terraform.tfvars from secret
+        run: echo "${{ secrets.TF_VARS }}" > terraform/terraform.tfvars
 
       - name: Terraform Init
         run: terraform init
