@@ -34,8 +34,9 @@ jobs:
 
 
       - name: Terraform Format Check
-        run: find . -name '*.tf' -exec terraform fmt -check -diff {} +
+        run: terraform fmt -check -recursive
         working-directory: terraform
+
 
   
       - name: Install and Run TFLint
