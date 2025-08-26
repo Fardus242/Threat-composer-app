@@ -45,6 +45,7 @@ jobs:
           tflint --version
           tflint --init --chdir=terraform
           tflint --chdir=terraform
+          tflint --chdir=terraform --disable-rule=terraform_typed_variables --disable-rule=terraform_unused_declarations
 
    
       - name: Terraform Init
