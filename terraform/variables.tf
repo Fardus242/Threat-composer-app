@@ -1,6 +1,7 @@
 variable "vpc_name" {
   type = string
 }
+
 variable "vpc_cidr" {
   type = string
 }
@@ -8,9 +9,11 @@ variable "vpc_cidr" {
 variable "subnet_1_name" {
   type = string
 }
+
 variable "subnet_1_cidr" {
   type = string
 }
+
 variable "subnet_1_az" {
   type = string
 }
@@ -27,21 +30,20 @@ variable "subnet_2_az" {
   type = string
 }
 
-
-
 variable "route_table_name" {
   type = string
 }
-variable "routetable_cidrs" {
-  
-}
+
+variable "routetable_cidrs" {}
 
 variable "internet_gateway_name" {}
 
 variable "security_group_name" {}
+
 variable "security_group_description" {}
 
 variable "ingress_cidr_block" {}
+
 variable "egress_cidr_block" {}
 
 variable "domain_name" {
@@ -69,8 +71,7 @@ variable "dns_ttl" {
 # variable "vpc_id" {}
 # variable "subnet_ids" {
 #   type = list(string)
-# } 
-
+# }
 
 variable "listener_port" {
   type    = number
@@ -102,13 +103,12 @@ variable "host_port" {
   default = 3000
 }
 
-
 variable "container_port" {
   type    = number
   default = 3000
 }
 
-#ecs
+# ecs
 
 variable "cluster_name" {
   type        = string
@@ -155,7 +155,6 @@ variable "desired_count" {
   description = "Number of ECS tasks to run"
 }
 
-
 # variable "security_group_id" {
 #   type        = string
 #   description = "Security group ID for the ECS service"
@@ -166,8 +165,8 @@ variable "desired_count" {
 #   description = "ARN of the ALB Target Group"
 # }
 
+# ecs
 
-#ecs
 variable "ecs_security_group_name" {
   type        = string
   description = "Name of ECS security group"
@@ -182,6 +181,7 @@ variable "ecs_security_group_description" {
 #   type        = number
 #   description = "Ingress port for ECS service"
 # }
+
 variable "ecs_ingress_cidr_block" {
   type        = string
   description = "CIDR block for ECS ingress"
