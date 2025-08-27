@@ -41,9 +41,9 @@ jobs:
           tflint --chdir=terraform
           tflint --chdir=terraform --disable-rule=terraform_typed_variables --disable-rule=terraform_unused_declarations
 
-      # 👇 NEW STEP: Recreate terraform.tfvars from GitHub secret
       - name: Create terraform.tfvars from secret
         run: echo "${{ secrets.TF_VARS }}" > terraform/terraform.tfvars
+
 
       - name: Terraform Init
         run: terraform init
