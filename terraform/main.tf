@@ -83,9 +83,9 @@ module "route53" {
 
 #acm
 
-module "acm" {
-  source          = "./modules/acm"
-  domain_name     = "tm-fardus.com"
-  route53_zone_id = "Z0874723168P4BGRP5CQS"
+# module "acm" {
+#   source          = "./modules/acm"
+#   domain_name     = "tm-fardus.com"
+#   route53_zone_id = "Z0874723168P4BGRP5CQS"
 
-}
+# }
