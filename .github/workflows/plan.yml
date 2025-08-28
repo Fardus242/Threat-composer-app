@@ -1,7 +1,6 @@
 name: Terraform Plan
 
 on:
-  workflow_dispatch:  
   workflow_run:       
     workflows: ["Docker Build & Push"]
     types:
@@ -12,7 +11,7 @@ env:
 
 jobs:
   terraform:
-    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch' }}
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
 
     steps:
@@ -42,13 +41,40 @@ jobs:
           tflint --chdir=terraform --disable-rule=terraform_typed_variables --disable-rule=terraform_unused_declarations
 
       - name: Create terraform.tfvars from secret
-        run: echo "${{ secrets.TF_VARS }}" > terraform/terraform.tfvars
+        run: |
+          mkdir -p terraform
+          printf "%s" "${{ secrets.TF_VARS }}" > terraform/terraform.tfvars
 
+      - name: Verify tfvars
+        run: test -s terraform/terraform.tfvars || (echo "TF_VARS secret is empty!" && exit 1)
 
       - name: Terraform Init
         run: terraform init
         working-directory: terraform
 
       - name: Terraform Plan
-        run: terraform plan -var-file=terraform.tfvars
+        run: |
+          terraform plan -var-file=terraform.tfvars -out=plan.out
+          terraform show -no-color plan.out > plan.txt
         working-directory: terraform
+
+      - name: Upload Plan Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: tf-plan
+          path: |
+            terraform/plan.out
+            terraform/plan.txt
+
+      - name: Show Plan in Summary
+        working-directory: terraform
+        run: |
+          {
+            echo '## Terraform Plan'
+            echo
+            echo '```'
+            sed -n '1,400p' plan.txt
+            echo '```'
+            echo
+            echo '_Full plan attached as artifact (tf-plan)._'
+          } >> "$GITHUB_STEP_SUMMARY"
