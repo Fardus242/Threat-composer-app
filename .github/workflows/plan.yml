@@ -1,10 +1,10 @@
-name: Terraform Plan
-
 on:
-  workflow_run:       
+  workflow_dispatch:
+  workflow_run:
     workflows: ["Docker Build & Push"]
     types:
       - completed
+
 
 env:
   AWS_REGION: eu-north-1  
