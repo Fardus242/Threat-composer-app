@@ -44,11 +44,10 @@ variable "route_table_name" {
 }
 
 variable "routetable_cidrs" {
-  type        = string
   description = "CIDR block for the route table"
+  type        = string
   default     = "0.0.0.0/0"
 }
-
 
 variable "internet_gateway_name" {
   description = "Name for Internet Gateway"
@@ -77,7 +76,7 @@ variable "egress_cidr_block" {
   default     = "0.0.0.0/0"
 }
 
-# For ECS
+# ECS Variables
 variable "ecs_security_group_name" {
   description = "Name of the ECS security group"
   type        = string
@@ -103,6 +102,7 @@ variable "app_to_port" {
   type        = number
 }
 
+# Private Subnets
 variable "private_subnet_1_cidr" {
   description = "CIDR block for private subnet 1"
   type        = string
@@ -133,6 +133,7 @@ variable "private_subnet_2_name" {
   type        = string
 }
 
+# NACL Configuration
 variable "private_nacl_config" {
   description = "Network ACL rules for private subnets with NAT and ECS access"
   type = list(object({
@@ -147,39 +148,39 @@ variable "private_nacl_config" {
 
   default = [
     {
-      rule_number = 100,
-      egress      = true,
-      protocol    = "-1",
-      rule_action = "allow",
-      cidr_block  = "0.0.0.0/0",
-      from_port   = 0,
+      rule_number = 100
+      egress      = true
+      protocol    = "-1"
+      rule_action = "allow"
+      cidr_block  = "0.0.0.0/0"
+      from_port   = 0
       to_port     = 0
     },
     {
-      rule_number = 100,
-      egress      = false,
-      protocol    = "-1",
-      rule_action = "allow",
-      cidr_block  = "0.0.0.0/0",
-      from_port   = 0,
+      rule_number = 100
+      egress      = false
+      protocol    = "-1"
+      rule_action = "allow"
+      cidr_block  = "0.0.0.0/0"
+      from_port   = 0
       to_port     = 0
     },
     {
-      rule_number = 200,
-      egress      = true,
-      protocol    = "-1",
-      rule_action = "deny",
-      cidr_block  = "0.0.0.0/0",
-      from_port   = 0,
+      rule_number = 200
+      egress      = true
+      protocol    = "-1"
+      rule_action = "deny"
+      cidr_block  = "0.0.0.0/0"
+      from_port   = 0
       to_port     = 0
     },
     {
-      rule_number = 200,
-      egress      = false,
-      protocol    = "-1",
-      rule_action = "deny",
-      cidr_block  = "0.0.0.0/0",
-      from_port   = 0,
+      rule_number = 200
+      egress      = false
+      protocol    = "-1"
+      rule_action = "deny"
+      cidr_block  = "0.0.0.0/0"
+      from_port   = 0
       to_port     = 0
     }
   ]
