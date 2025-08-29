@@ -141,3 +141,9 @@ variable "private_nacl_config" {
     { rule_number = 200, egress = false, protocol = "-1", rule_action = "deny", cidr_block = "0.0.0.0/0", from_port = 0, to_port = 0 }
   ]
 }
+
+variable "routetable_cidrs" {
+  type = list(string)
+  description = "CIDR blocks for the route table"
+}
+
