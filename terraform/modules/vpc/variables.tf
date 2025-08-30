@@ -44,10 +44,11 @@ variable "route_table_name" {
 }
 
 variable "routetable_cidrs" {
-  description = "CIDR block for the route table"
-  type        = string
-  default     = "0.0.0.0/0"
+  description = "List of CIDR blocks for the route table"
+  type        = list(string)
+  default     = ["0.0.0.0/0"]
 }
+
 
 variable "internet_gateway_name" {
   description = "Name for Internet Gateway"
@@ -138,12 +139,12 @@ variable "private_nacl_config" {
   description = "Network ACL rules for private subnets with NAT and ECS access"
   type = list(object({
     rule_number : number
-    egress      : bool
-    protocol    : string
+    egress : bool
+    protocol : string
     rule_action : string
-    cidr_block  : string
-    from_port   : number
-    to_port     : number
+    cidr_block : string
+    from_port : number
+    to_port : number
   }))
 
   default = [
