@@ -44,6 +44,7 @@ resource "aws_route_table" "rt" {
     gateway_id = aws_internet_gateway.gw.id
   }
 
+
   tags = {
     Name = var.route_table_name
   }
@@ -53,6 +54,9 @@ resource "aws_route_table_association" "public" {
   route_table_id = aws_route_table.rt.id
 }
 
+resource "aws_route_table" "main" {
+  vpc_id = aws_vpc.main.id
+}
 
 
 resource "aws_security_group" "alb_sg" {
