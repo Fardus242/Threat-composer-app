@@ -4,11 +4,11 @@ output "zone_id" {
 }
 
 output "subdomain_record_fqdn" {
-  description = "FQDN of the tm subdomain created"
-  value       = aws_route53_record.subdomain.fqdn
+  description = "FQDN of the subdomain created"
+  value       = aws_route53_record.app.fqdn
 }
 
 output "app_url" {
   description = "Public URL of the app"
-  value       = "https://${aws_route53_record.subdomain.fqdn}"
+  value       = "https://${aws_route53_record.app.fqdn}"
 }

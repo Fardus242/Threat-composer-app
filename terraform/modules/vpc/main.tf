@@ -55,7 +55,7 @@ resource "aws_route_table_association" "public" {
 }
 
 resource "aws_route_table" "main" {
-  vpc_id = aws_vpc.main.id
+  vpc_id = aws_vpc.this.id
 }
 
 

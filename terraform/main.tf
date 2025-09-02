@@ -71,21 +71,18 @@ module "ecs" {
 
 
 
-#route53
 module "route53" {
-  source = "./modules/route53"
-
-  domain_name  = var.domain_name
-  alb_dns_name = module.alb.lb_dns_name
-  alb_zone_id  = module.alb.lb_zone_id
+  source           = "./modules/route53"
+  hosted_zone_name = var.hosted_zone_name  
+  subdomain        = "tm"
+  alb_dns_name     = module.alb.lb_dns_name
+  alb_zone_id      = module.alb.lb_zone_id
 }
 
+module "acm" {
+  source          = "./modules/acm"
+  domain_name     = var.domain_name  
+  route53_zone_id = module.route53.zone_id  
+}
 
-#acm
-
-# module "acm" {
-#   source          = "./modules/acm"
-#   domain_name     = "tm-fardus.com"
-#   route53_zone_id = "Z0874723168P4BGRP5CQS"
-
-# }
+# "Z0874723168P4BGRP5CQS"

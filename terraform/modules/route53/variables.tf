@@ -1,5 +1,10 @@
-variable "domain_name" {
-  description = "Root domain name (e.g., tm-fardus.com)"
+variable "hosted_zone_name" {
+  description = "Base domain hosted in Route53 (must match exactly, e.g. tm-fardus.com.)"
+  type        = string
+}
+
+variable "subdomain" {
+  description = "Subdomain prefix (e.g. tm)"
   type        = string
 }
 

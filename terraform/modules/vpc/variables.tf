@@ -45,11 +45,9 @@ variable "route_table_name" {
 
 variable "routetable_cidrs" {
   description = "List of CIDR blocks for the route table"
-  type        = list(string)
-  default     = ["0.0.0.0/0"]
+  type        = string
+  default     = "0.0.0.0/0"
 }
-
-
 
 
 variable "internet_gateway_name" {

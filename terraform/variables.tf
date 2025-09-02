@@ -35,7 +35,7 @@ variable "route_table_name" {
 }
 
 variable "routetable_cidrs" {
-  type = list(string)
+  type = string
 }
 
 variable "internet_gateway_name" {
@@ -207,4 +207,15 @@ variable "app_from_port" {
 variable "app_to_port" {
   type        = number
   description = "Port to which the application will be accessible"
+}
+
+
+# variable "domain_name" {
+#   description = "Domain name for the hosted zone in Route53 (e.g. tm-fardus.com.)"
+#   type        = string
+# }
+
+variable "hosted_zone_name" {
+  description = "Base domain hosted in Route53 (must match exactly, e.g. tm-fardus.com.)"
+  type        = string
 }
