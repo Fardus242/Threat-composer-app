@@ -1,5 +1,3 @@
-
-
 module "vpc" {
   source = "./modules/vpc"
 
@@ -23,15 +21,15 @@ module "vpc" {
   ecs_ingress_cidr_block         = var.ecs_ingress_cidr_block
   app_from_port                  = var.app_from_port
   app_to_port                    = var.app_to_port
-  private_subnet_1_cidr          = "10.0.3.0/24"
-  private_subnet_1_az            = "us-east-1a"
-  private_subnet_1_name          = "private-1"
+
+  private_subnet_1_cidr = "10.0.3.0/24"
+  private_subnet_1_az   = "us-east-1a"
+  private_subnet_1_name = "private-1"
 
   private_subnet_2_cidr = "10.0.4.0/24"
   private_subnet_2_az   = "us-east-1b"
   private_subnet_2_name = "private-2"
 }
-
 
 module "alb" {
   source            = "./modules/alb"
@@ -42,8 +40,7 @@ module "alb" {
   certificate_arn   = module.acm.certificate_arn
 }
 
-
-#ecs
+# ecs
 module "ecs" {
   source                         = "./modules/ecs"
   cluster_name                   = var.cluster_name
@@ -69,11 +66,9 @@ module "ecs" {
   ecs_security_group_id = module.vpc.ecs_security_group_id
 }
 
-
-
 module "route53" {
   source           = "./modules/route53"
-  hosted_zone_name = var.hosted_zone_name  
+  hosted_zone_name = var.hosted_zone_name
   subdomain        = "tm"
   alb_dns_name     = module.alb.lb_dns_name
   alb_zone_id      = module.alb.lb_zone_id
@@ -81,9 +76,8 @@ module "route53" {
 
 module "acm" {
   source          = "./modules/acm"
-  domain_name     = var.domain_name  
-  route53_zone_id = module.route53.zone_id  
+  domain_name     = var.domain_name
+  route53_zone_id = module.route53.zone_id
 }
 
 # "Z0874723168P4BGRP5CQS"
-#
