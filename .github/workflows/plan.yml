@@ -5,7 +5,6 @@ on:
     types:
       - completed
 
-
 env:
   AWS_REGION: eu-north-1  
 
@@ -43,10 +42,15 @@ jobs:
       - name: Create terraform.tfvars from secret
         run: |
           mkdir -p terraform
-          printf "%s" "${{ secrets.TF_VARS }}" > terraform/terraform.tfvars
+          cat <<EOF > terraform/terraform.tfvars
+${{ secrets.TF_VARS }}
+EOF
 
       - name: Verify tfvars
-        run: test -s terraform/terraform.tfvars || (echo "TF_VARS secret is empty!" && exit 1)
+        run: |
+          test -s terraform/terraform.tfvars || (echo "TF_VARS secret is empty!" && exit 1)
+          echo "TFVARS content:"
+          cat terraform/terraform.tfvars
 
       - name: Terraform Init
         run: terraform init
@@ -78,5 +82,3 @@ jobs:
             echo
             echo '_Full plan attached as artifact (tf-plan)._'
           } >> "$GITHUB_STEP_SUMMARY"
-
-          
