@@ -1,16 +1,11 @@
 on:
-  workflow_dispatch:
-  workflow_run:
-    workflows: ["Docker Build & Scan"]
-    types:
-      - completed
+  workflow_dispatch:  # Manual trigger only
 
 env:
   AWS_REGION: eu-north-1  
 
 jobs:
   terraform:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
 
     steps:
@@ -45,12 +40,6 @@ jobs:
           cat <<EOF > terraform/terraform.tfvars
 ${{ secrets.TF_VARS }}
 EOF
-
-      - name: Verify tfvars
-        run: |
-          test -s terraform/terraform.tfvars || (echo "TF_VARS secret is empty!" && exit 1)
-          echo "TFVARS content:"
-          cat terraform/terraform.tfvars
 
       - name: Terraform Init
         run: terraform init
