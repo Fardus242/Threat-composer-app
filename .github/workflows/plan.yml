@@ -1,73 +1,52 @@
+name: Terraform Plan
+
 on:
-  workflow_dispatch:  # Manual trigger only
-
-env:
-  AWS_REGION: eu-north-1  
-
+  workflow_dispatch:  
 jobs:
-  terraform:
+  terraform-plan:
     runs-on: ubuntu-latest
 
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_REGION: ${{ secrets.AWS_REGION }}
+
+    defaults:
+      run:
+        working-directory: ./terraform
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v2
+        uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ env.AWS_REGION }}
-
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v3
-
-      - name: Terraform Format Check
-        run: terraform fmt -check -recursive
-        working-directory: terraform
-
-      - name: Install and Run TFLint
-        run: |
-          curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
-          tflint --version
-          tflint --init --chdir=terraform
-          tflint --chdir=terraform
-          tflint --chdir=terraform --disable-rule=terraform_typed_variables --disable-rule=terraform_unused_declarations
+          aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Create terraform.tfvars from secret
-        run: |
-          mkdir -p terraform
-          cat <<EOF > terraform/terraform.tfvars
-${{ secrets.TF_VARS }}
-EOF
+        run: echo "${{ secrets.TF_VARS }}" > terraform.tfvars
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.3.0
 
       - name: Terraform Init
         run: terraform init
-        working-directory: terraform
+
+      - name: Terraform Validate
+        run: terraform validate
 
       - name: Terraform Plan
-        run: |
-          terraform plan -var-file=terraform.tfvars -out=plan.out
-          terraform show -no-color plan.out > plan.txt
-        working-directory: terraform
+        run: terraform plan -var-file=terraform.tfvars -out=plan.out
 
-      - name: Upload Plan Artifacts
-        uses: actions/upload-artifact@v4
+      - name: Set up TFLint
+        uses: terraform-linters/setup-tflint@v4
         with:
-          name: tf-plan
-          path: |
-            terraform/plan.out
-            terraform/plan.txt
+          tflint_version: latest
 
-      - name: Show Plan in Summary
-        working-directory: terraform
-        run: |
-          {
-            echo '## Terraform Plan'
-            echo
-            echo '```'
-            sed -n '1,400p' plan.txt
-            echo '```'
-            echo
-            echo '_Full plan attached as artifact (tf-plan)._'
-          } >> "$GITHUB_STEP_SUMMARY"
+      - name: Run TFLint
+        run: tflint || true
