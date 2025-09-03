@@ -5,7 +5,7 @@ data "aws_route53_zone" "selected" {
 
 resource "aws_route53_record" "app" {
   zone_id = data.aws_route53_zone.selected.zone_id
-  name    = "${var.subdomain}.${var.hosted_zone_name}"
+  name    = "tm.${var.subdomain}.${var.hosted_zone_name}"
   type    = "A"
 
   alias {

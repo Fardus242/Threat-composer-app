@@ -38,6 +38,7 @@ module "alb" {
   alb_sg_id         = module.vpc.alb_sg_id
   security_group_id = module.vpc.alb_sg_id
   certificate_arn   = module.acm.certificate_arn
+  
 }
 
 # ecs
@@ -78,6 +79,7 @@ module "acm" {
   source          = "./modules/acm"
   domain_name     = var.domain_name
   route53_zone_id = module.route53.zone_id
+  
 }
 
 # "Z0874723168P4BGRP5CQS"
