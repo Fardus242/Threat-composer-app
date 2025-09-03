@@ -54,3 +54,9 @@ jobs:
 
       - name: Run TFLint
         run: tflint || true
+
+      - name: Upload Terraform Plan Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: tfplan
+          path: terraform/plan.out
