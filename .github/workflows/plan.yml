@@ -2,6 +2,7 @@ name: Terraform Plan
 
 on:
   workflow_dispatch:  
+
 jobs:
   terraform-plan:
     runs-on: ubuntu-latest
@@ -26,9 +27,11 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: eu-north-1
 
-
       - name: Create terraform.tfvars from secret
-        run: echo "${{ secrets.TF_VARS }}" > terraform.tfvars
+        run: |
+          cat <<'EOF' > terraform.tfvars
+          ${{ secrets.TF_VARS }}
+          EOF
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
