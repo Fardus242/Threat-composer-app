@@ -38,12 +38,6 @@ jobs:
         with:
           terraform_version: 1.3.0
 
-      - name: Download Terraform Plan Artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: tfplan
-          path: terraform/plan.out
-
       - name: Terraform Init
         run: terraform init
 
