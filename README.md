@@ -72,30 +72,26 @@ serve -s build
 - **ECR workflows** – push images to Amazon ECR.
 - **Terraform workflows** – run `plan`, `apply`, and optionally `destroy` infrastructure.
 
-1. ### Docker
+### Deployment Workflow
 
-  *Dockerfile in the app/ directory defines how the application is built into a container.
+1. **Docker Build and Push**
+   - Builds the Docker image.
+   - Runs a security scan using Trivy.
+   - Pushes the image to Amazon ECR.
 
-2. ### Terraform (Infrastructure as Code)
+2. **Terraform Plan**
+   - Initializes the Terraform configuration (`terraform init`) and generates an execution plan (`terraform plan`).
+   - Validates configuration with TFLint.
+   - Performs a security scan using Checkov.
 
- *ECS Fargate – hosts the application container.
+3. **Terraform Apply**
+   - Applies the Terraform configuration to create or update infrastructure.
+   - Deploys the ECS service, Application Load Balancer, Route 53 records, and ACM certificate.
 
- *Application Load Balancer (ALB) – routes traffic to your ECS service.
+4. **Terraform Destroy**
+   - Tears down all Terraform-managed resources when they are no longer needed.
 
- *Route 53 – manages the domain.
 
- *ACM (AWS Certificate Manager) – provides SSL certificates.
+### Here is a demonstration
+<img width="1897" height="923" alt="image" src="https://github.com/user-attachments/assets/5baac8fd-4d62-4422-af47-1478b54d70c1" />
 
- *Security Groups – control inbound and outbound access.
-
- *VPC – includes public subnets, an Internet Gateway, and a NAT Gateway.
-
- *Remote State – stored in an S3 bucket with state locking for safety.
-
-3. ### CI/CD (GitHub Actions)
-
- *Docker workflows – build and scan Docker images.
-
- *ECR workflows – push images to Amazon ECR.
-
- *Terraform workflows – run plan, apply, and optionally destroy infrastructure.
