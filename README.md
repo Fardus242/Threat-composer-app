@@ -29,6 +29,7 @@ serve -s build
 ```
 
 ## Project Structure
+```
 ./
 ├── app/
 ├── Dockerfile
@@ -50,7 +51,7 @@ serve -s build
         ├── docker.yml
         └── plan.yml
 
-
+```
 
 
 ## Key Components
