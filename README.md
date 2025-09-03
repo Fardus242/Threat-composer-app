@@ -28,33 +28,56 @@ yarn global add serve
 serve -s build
 ```
 
+## Project Structure
+./
+├── app/
+├── Dockerfile
+├── terraform/
+│   ├── backend.tf
+│   ├── main.tf
+│   ├── provider.tf
+│   ├── variables.tf
+│   └── modules/
+│       ├── acm/
+│       ├── alb/
+│       ├── ecs/
+│       ├── route53/
+│       └── vpc/
+└── .github/
+    └── workflows/
+        ├── apply.yml
+        ├── destroy.yml
+        ├── docker.yml
+        └── plan.yml
+
+
+
+
 ## Key Components
-* ### Docker
+1. ### Docker
 
-* Dockerfile defines how the Node.js app is containerized.
+  *Dockerfile in the app/ directory defines how the application is built into a container.
 
-Terraform (Infrastructure as Code)
+2. ### Terraform (Infrastructure as Code)
 
-ECS Fargate to host the containerized app.
+ *ECS Fargate – hosts the application container.
 
-Application Load Balancer for HTTPS traffic routing.
+ *Application Load Balancer (ALB) – routes traffic to your ECS service.
 
-Route 53 for DNS/domain management.
+ *Route 53 – manages the domain.
 
-ACM (AWS Certificate Manager) for SSL/TLS certificates.
+ *ACM (AWS Certificate Manager) – provides SSL certificates.
 
-Security groups to manage network access.
+ *Security Groups – control inbound and outbound access.
 
-VPC setup with public subnets, internet gateway, and NAT gateway.
+ *VPC – includes public subnets, an Internet Gateway, and a NAT Gateway.
 
-S3 Bucket for remote Terraform state with state locking.
+ *Remote State – stored in an S3 bucket with state locking for safety.
 
-CI/CD (GitHub Actions)
+3. ### CI/CD (GitHub Actions)
 
-Build and scan Docker images.
+ *Docker workflows – build and scan Docker images.
 
-Push images to Amazon ECR.
+ *ECR workflows – push images to Amazon ECR.
 
-Run Terraform plan and apply for infrastructure changes.
-
-Optionally destroy infrastructure if needed.
+ *Terraform workflows – run plan, apply, and optionally destroy infrastructure.
