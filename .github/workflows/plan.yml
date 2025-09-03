@@ -60,3 +60,9 @@ jobs:
         with:
           name: tfplan
           path: terraform/plan.out
+
+      - name: Upload Terraform Plan Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: tfplan
+          path: ./terraform/plan.out
