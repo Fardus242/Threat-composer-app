@@ -55,6 +55,23 @@ serve -s build
 
 
 ## Key Components
+### Docker
+- `Dockerfile` in the `app/` directory defines how the application is built into a container.
+
+### Terraform (Infrastructure as Code)
+- **ECS Fargate** – hosts the application container.
+- **Application Load Balancer (ALB)** – routes traffic to your ECS service.
+- **Route 53** – manages the domain.
+- **ACM (AWS Certificate Manager)** – provides SSL certificates.
+- **Security Groups** – control inbound and outbound access.
+- **VPC** – includes public subnets, an Internet Gateway, and a NAT Gateway.
+- **Remote State** – stored in an S3 bucket with state locking for safety.
+
+### CI/CD (GitHub Actions)
+- **Docker workflows** – build and scan Docker images.
+- **ECR workflows** – push images to Amazon ECR.
+- **Terraform workflows** – run `plan`, `apply`, and optionally `destroy` infrastructure.
+
 1. ### Docker
 
   *Dockerfile in the app/ directory defines how the application is built into a container.
