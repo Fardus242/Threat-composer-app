@@ -97,7 +97,10 @@ serve -s build
 ### Here is a demonstration
 
 ### Domain Page
-<img width="1897" height="923" alt="image" src="https://github.com/user-attachments/assets/5baac8fd-4d62-4422-af47-1478b54d70c1" />
+
+<img width="1900" height="958" alt="Screenshot 2025-09-04 145659" src="https://github.com/user-attachments/assets/b38d1957-35d5-48b3-b17d-2e37f712e85c" />
 
 ### SSL certificate
+<img width="1908" height="921" alt="Screenshot 2025-09-04 145619" src="https://github.com/user-attachments/assets/ef0478df-0860-4546-a80c-b4a22c1d033a" />
+
 
