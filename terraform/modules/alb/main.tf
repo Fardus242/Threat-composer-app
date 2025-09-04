@@ -63,7 +63,7 @@ resource "aws_lb_listener" "https" {
   port              = 443
   protocol          = "HTTPS"
   ssl_policy        = "ELBSecurityPolicy-2016-08"
-  certificate_arn   = var.certificate_arn
+  certificate_arn   = data.aws_acm_certificate.main.arn
   
 
 
@@ -72,4 +72,11 @@ resource "aws_lb_listener" "https" {
     type             = "forward"
     target_group_arn = aws_lb_target_group.this.arn
   }
+}
+
+
+data "aws_acm_certificate" "main" {
+  domain      = "tm-fardus.com"
+  statuses    = ["ISSUED"]
+  most_recent = true
 }

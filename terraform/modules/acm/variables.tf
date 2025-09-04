@@ -4,19 +4,7 @@ variable "domain_name" {
 }
 
 variable "route53_zone_id" {
-  description = "Route53 hosted zone ID"
+  description = "Route53 hosted zone ID (optional, if needed elsewhere)"
   type        = string
   default     = ""
-}
-
-variable "validation_method" {
-  description = "Validation method for ACM certificate"
-  type        = string
-  default     = "DNS"
-}
-
-variable "dns_ttl" {
-  description = "TTL for DNS validation record"
-  type        = number
-  default     = 60
 }

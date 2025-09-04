@@ -7,7 +7,7 @@ variable "subnet_ids" {
 }
 
 variable "alb_sg_id" {
-
+  type = string
 }
 
 
@@ -70,9 +70,4 @@ variable "health_check_healthy_threshold" {
 variable "health_check_unhealthy_threshold" {
   type    = number
   default = 2
-}
-
-variable "certificate_arn" {
-  type        = string
-  description = "ACM certificate ARN for HTTPS listener"
 }

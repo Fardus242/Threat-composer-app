@@ -1,7 +1,7 @@
 terraform {
   backend "s3" {
-    bucket         = "terraform-state-fardus"   # 👈 use the bucket name you created
-    key            = "infra/terraform.tfstate"  # path inside the bucket
+    bucket         = "terraform-state-fardus"   
+    key            = "infra/terraform.tfstate"  
     region         = "eu-north-1"
     dynamodb_table = "terraform-locks"
     encrypt        = true

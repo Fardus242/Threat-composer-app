@@ -65,10 +65,6 @@ variable "target_group_arn" {
   description = "ARN of the ALB Target Group"
 }
 
-# variable "security_groups" {
-#   type        = string
-#   description = "security group names"
-# }
 
 variable "vpc_id" {
   description = "VPC ID for ECS security group"

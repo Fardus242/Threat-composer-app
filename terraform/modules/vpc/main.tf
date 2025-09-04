@@ -95,7 +95,7 @@ resource "aws_security_group" "alb_sg" {
 }
 
 
-#ecs security group
+
 resource "aws_security_group" "ecs" {
   name        = var.ecs_security_group_name
   description = var.ecs_security_group_description
@@ -121,22 +121,7 @@ resource "aws_security_group" "ecs" {
 }
 
 
-# Private Subnets
-# resource "aws_subnet" "private1" {
-#   vpc_id            = aws_vpc.this.id
-#   cidr_block        = var.private_subnet_1_cidr
-#   availability_zone = var.private_subnet_1_az
 
-#   tags = { Name = var.private_subnet_1_name }
-# }
-
-# resource "aws_subnet" "private2" {
-#   vpc_id            = aws_vpc.this.id
-#   cidr_block        = var.private_subnet_2_cidr
-#   availability_zone = var.private_subnet_2_az
-
-#   tags = { Name = var.private_subnet_2_name }
-# }
 
 
 data "aws_availability_zones" "available" {}
@@ -157,20 +142,20 @@ resource "aws_subnet" "private2" {
 
 
 
-# Elastic IP for NAT Gateway
+
 resource "aws_eip" "nat" {
   domain = "vpc"
 }
 
-# NAT Gateway in one of the public subnets
+
 resource "aws_nat_gateway" "this" {
   allocation_id = aws_eip.nat.id
-  subnet_id     = aws_subnet.subnet1.id # pick one public subnet
+  subnet_id     = aws_subnet.subnet1.id 
   tags          = { Name = "${var.vpc_name}-nat" }
   depends_on    = [aws_internet_gateway.gw]
 }
 
-# Private Route Table
+
 resource "aws_route_table" "private" {
   vpc_id = aws_vpc.this.id
 
@@ -182,7 +167,7 @@ resource "aws_route_table" "private" {
   tags = { Name = "${var.vpc_name}-private-rt" }
 }
 
-# Private Route Table Associations
+
 resource "aws_route_table_association" "private1" {
   subnet_id      = aws_subnet.private1.id
   route_table_id = aws_route_table.private.id

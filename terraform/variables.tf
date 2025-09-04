@@ -63,52 +63,7 @@ variable "domain_name" {
   type        = string
 }
 
-# variable "route53_zone_id" {
-#   description = "Route53 hosted zone ID"
-#   type        = string
-# }
-
-# variable "validation_method" {
-#   description = "ACM certificate validation method"
-#   type        = string
-#   default     = "DNS"
-# }
-
-# variable "dns_ttl" {
-#   description = "TTL for ACM DNS validation record"
-#   type        = number
-#   default     = 60
-# }
-
-# variable "vpc_id" {}
-# variable "subnet_ids" {
-#   type = list(string)
-# }
-
-# variable "listener_port" {
-#   type    = number
-#   default = 80
-# }
-
-# variable "listener_protocol" {
-#   type    = string
-#   default = "HTTP"
-# }
-
-# variable "target_group_port" {
-#   type    = number
-#   default = 80
-# }
-
-# variable "target_group_protocol" {
-#   type    = string
-#   default = "HTTP"
-# }
-
-# variable "health_check_path" {
-#   type    = string
-#   default = "/"
-# }
+ 
 
 variable "host_port" {
   type    = number
@@ -167,17 +122,6 @@ variable "desired_count" {
   description = "Number of ECS tasks to run"
 }
 
-# variable "security_group_id" {
-#   type        = string
-#   description = "Security group ID for the ECS service"
-# }
-
-# variable "target_group_arn" {
-#   type        = string
-#   description = "ARN of the ALB Target Group"
-# }
-
-# ecs
 
 variable "ecs_security_group_name" {
   type        = string
@@ -189,10 +133,6 @@ variable "ecs_security_group_description" {
   description = "Description for ECS security group"
 }
 
-# variable "ecs_ingress_port" {
-#   type        = number
-#   description = "Ingress port for ECS service"
-# }
 
 variable "ecs_ingress_cidr_block" {
   type        = string
@@ -210,12 +150,14 @@ variable "app_to_port" {
 }
 
 
-# variable "domain_name" {
-#   description = "Domain name for the hosted zone in Route53 (e.g. tm-fardus.com.)"
-#   type        = string
-# }
-
 variable "hosted_zone_name" {
   description = "Base domain hosted in Route53 (must match exactly, e.g. tm-fardus.com.)"
   type        = string
+}
+
+
+variable "subdomain" {
+  description = "Subdomain to point to the ALB (e.g., tm or app)"
+  type        = string
+  default     = "tm"
 }

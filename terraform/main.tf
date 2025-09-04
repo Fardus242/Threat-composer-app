@@ -31,15 +31,22 @@ module "vpc" {
   private_subnet_2_name = "private-2"
 }
 
+
 module "alb" {
-  source            = "./modules/alb"
-  vpc_id            = module.vpc.vpc_id
-  subnet_ids        = module.vpc.subnet_ids
-  alb_sg_id         = module.vpc.alb_sg_id
+  source    = "./modules/alb"
+  vpc_id    = module.vpc.vpc_id
+  subnet_ids = module.vpc.subnet_ids
+  alb_sg_id = module.vpc.alb_sg_id
   security_group_id = module.vpc.alb_sg_id
-  certificate_arn   = module.acm.certificate_arn
   
 }
+
+module "acm" {
+  source       = "./modules/acm"
+  domain_name  = var.domain_name         
+  route53_zone_id = module.route53.zone_id  
+}
+
 
 # ecs
 module "ecs" {
@@ -63,23 +70,15 @@ module "ecs" {
   vpc_id                         = module.vpc.vpc_id
   app_from_port                  = var.app_from_port
   app_to_port                    = var.app_to_port
-  # security_groups                = [module.vpc.ecs_security_group_id]
+ 
   ecs_security_group_id = module.vpc.ecs_security_group_id
 }
-
 module "route53" {
   source           = "./modules/route53"
-  hosted_zone_name = var.hosted_zone_name
-  subdomain        = "tm"
-  alb_dns_name     = module.alb.lb_dns_name
+  hosted_zone_name = var.hosted_zone_name    
+  subdomain        = var.subdomain           
+  alb_dns_name     = module.alb.alb_dns_name
   alb_zone_id      = module.alb.lb_zone_id
 }
 
-module "acm" {
-  source          = "./modules/acm"
-  domain_name     = var.domain_name
-  route53_zone_id = module.route53.zone_id
-  
-}
 
-# "Z0874723168P4BGRP5CQS"
