@@ -10,6 +10,7 @@ This project builds upon Amazon's open-source Threat Composer Tool, extending it
 - DNS management via Route 53
 
 ## Architecture Diagram:
+![project diagram](https://github.com/user-attachments/assets/d73ca0db-bcfa-4836-b3ba-8d5bdd3db710)
 
 
 ## Local app setup 💻
