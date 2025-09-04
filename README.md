@@ -22,10 +22,10 @@ yarn build
 yarn global add serve
 serve -s build
 
-#Then visit:
+Then visit:
 http://localhost:3000/workspaces/default/dashboard
 
-## Or use:
+Or use:
 yarn global add serve
 serve -s build
 ```
@@ -102,5 +102,19 @@ serve -s build
 
 ### SSL certificate
 <img width="1908" height="921" alt="Screenshot 2025-09-04 145619" src="https://github.com/user-attachments/assets/ef0478df-0860-4546-a80c-b4a22c1d033a" />
+
+### Docker Build and Push to ECR
+<img width="1896" height="747" alt="image" src="https://github.com/user-attachments/assets/6ec4356a-940c-4f0d-af9e-765120ef155c" />
+
+### Terraform Plan
+
+<img width="1908" height="846" alt="image" src="https://github.com/user-attachments/assets/345d0723-7044-4c60-87da-b7c3e7ea56bb" />
+
+### Terraform Apply
+<img width="1862" height="668" alt="image" src="https://github.com/user-attachments/assets/3fb2e9a9-1e77-4ca7-b21c-c80ebd55714e" />
+
+### Terraform Destroy 
+<img width="1886" height="697" alt="image" src="https://github.com/user-attachments/assets/e9387ecc-ff7f-432f-9cc0-1027081cd221" />
+
 
 
